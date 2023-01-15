@@ -18,6 +18,7 @@ const Post = sequelize.define('Post',{
     },
     userId:{
         type: DataTypes.INTEGER,
+        allowNull: false,
         references:{
             model: User,
             key: 'id'
