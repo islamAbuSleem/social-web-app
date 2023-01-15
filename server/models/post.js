@@ -8,7 +8,8 @@ const Post = sequelize.define('Post',{
         type: DataTypes.INTEGER,
         allowNull: false,
         unique: true,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
     },
     desc:{
         type: DataTypes.STRING,
