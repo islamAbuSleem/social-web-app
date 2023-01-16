@@ -1,6 +1,8 @@
 const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../DB/dbConfig');
-const User = require('./user')
+const User = require('./user');
+const Post = require('./post');
+
 class Comment extends Model {}
 
 Comment.init({
@@ -19,10 +21,24 @@ Comment.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         references:{
-            model: User
-        }
+            model: User,
+            key: 'id'
+        },
+    },
+    postId:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references:{
+            model: Post,
+            key: 'id'
+        },
     }
 },{
     sequelize,
     modelName: 'Comment'
 })
+
+Comment.hasOne(Post,{onDelete: 'cascade',hooks: true});
+Comment.hasMany(User,{onDelete: 'cascade',hooks: true});
+
+module.exports = Comment;
