@@ -1,9 +1,11 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../DB/dbConfig')
 
 const User = require('./user');
 
-const Post = sequelize.define('Post',{
+class Post extends Model{}
+
+Post.init({
     id:{
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -25,6 +27,9 @@ const Post = sequelize.define('Post',{
             key: 'id'
         }
     }
+},{
+    sequelize,
+    modelName:'Post'
 })
 
 Post.hasOne(User,{onDelete: 'cascade', hooks: true})
