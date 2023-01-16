@@ -1,7 +1,8 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../DB/dbConfig')
 
-const User = sequelize.define('User',{
+class User extends Model{}
+User.init({
     id: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -41,6 +42,9 @@ const User = sequelize.define('User',{
         type: DataTypes.STRING(45),
         allowNull: true,
     },
+},{
+    sequelize,
+    modelName:'User'
 })
 
 
