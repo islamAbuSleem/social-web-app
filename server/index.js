@@ -1,25 +1,25 @@
 const express = require('express');
 const app = express();
-const cors = require('cors');
 const morgan = require('morgan');
+const cors = require('cors');
 const sequelize = require('./DB/dbConfig')
+const usersRoute = require('./routes/users')
 
-
-app.use(cors);
+app.use(cors());
 app.use(morgan('tiny'));
+app.use(express.json());
+app.use(express.urlencoded({extended:false}));
 
 // testing db connection
-    sequelize.authenticate().then(()=>{
-        console.log('Connection has been established successfully.');
-    }).catch((e)=>{
-        console.error('Unable to connect to the database:', e);
-    })
-    
+sequelize.authenticate().then(()=>{
+    console.log('Connection has been established successfully.');
+}).catch((e)=>{
+    console.error('Unable to connect to the database:', e);
+})
 
-
-
-
+    // routes
+app.use('/users', usersRoute)
 
 
 const PORT = process.env.PORT || 3000
-app.listen(PORT)
+app.listen(PORT,()=> console.log(`app is running on port ${PORT}`))
