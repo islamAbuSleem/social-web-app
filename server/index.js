@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const sequelize = require('./DB/dbConfig')
 const usersRoute = require('./routes/users')
+const authRoute = require('./routes/auth')
 
 app.use(cors());
 app.use(morgan('tiny'));
@@ -17,8 +18,9 @@ sequelize.authenticate().then(()=>{
     console.error('Unable to connect to the database:', e);
 })
 
-    // routes
+// routes
 app.use('/users', usersRoute)
+app.use('/auth', authRoute)
 
 
 const PORT = process.env.PORT || 3000
