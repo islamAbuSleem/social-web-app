@@ -1,8 +1,13 @@
-const sequelize = require('../DB/dbConfig')
+const User = require('../models/user')
 
-module.exports.register = (req, res, next)=> {
-    
-    res.send('add user')
+module.exports.register = async (req, res, next)=> {
+    console.log(req.body)
+    let user = await User.findOne({where: {email: req.body.email}})
+    if(user){
+        res.send(user)
+    }else{
+        res.send('does not exist')
+    }
 }
 module.exports.getUser = (req, res, next)=> {
     res.send('all users')
