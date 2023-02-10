@@ -49,6 +49,13 @@ module.exports.login = async (req, res, next) => {
 
 }
 
+module.exports.logOut = (req, res, next)=>{
+    res.clearCookie("accessToken",{
+        secure: true,
+        sameSite: 'none'
+    }).status(200).send('user has been logged out')
+}
+
 module.exports.getUser = (req, res, next) => {
     res.send('all users');
 }
