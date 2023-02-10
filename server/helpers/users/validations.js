@@ -12,6 +12,15 @@ const registerSchema = Joi.object({
 
 })
 
+const loginSchema = Joi.object({
+    email: Joi.string().email().required(),
+    password: Joi.string().min(6).required()
+})
+
 module.exports.validateRegister = (data) =>{
     return registerSchema.validate(data)
+}
+
+module.exports.validateLogin = (data) =>{
+    return loginSchema.validate(data)
 }
