@@ -1,29 +1,54 @@
 <script setup>
-import { ref } from 'vue';
-import { login } from '../../../Api/auth';
+import { ref } from "vue";
+import { login } from "../../../Api/auth";
 
 const user = ref({
-  email:'',
-  password:''
+  email: "",
+  password: ""
 });
 
-async function loginUser(){
-  let res = await login(user.value)
-  console.log(res)
+async function loginUser() {
+  let res = await login(user.value);
+  console.log(res);
 }
-
 </script>
 
 <template>
   <section class="login bg-violet-300">
-    <div class="container mx-auto h-screen flex items-center">
-      <div class="grid grid-cols-2 auto-cols-max w-3/5 mx-auto h-3/5 rounded -mt-16">
-        <div class="bg-white rounded-l flex items-center py-10">
+    <div class="container mx-auto h-screen flex ">
+      <div class="grid grid-cols-2 auto-cols-max w-3/5 mx-auto h-3/5 rounded mt-3">
+        <div class="bg-white rounded-l flex items-center ">
           <div
-            class="w-full mx-auto max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-lg sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700"
+            class="w-full mx-auto max-w-sm p-4 bg-white rounded-lg  sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700"
           >
             <form class="space-y-6" @submit.prevent="loginUser">
-              <h5 class="text-xl font-medium text-gray-900 dark:text-white"> Register to our platform</h5>
+              <h5 class="text-xl font-medium text-gray-900 dark:text-white">Register to our platform</h5>
+              <div>
+                <label
+                  for="Username"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Username</label>
+                <input
+                  type="text"
+                  id="Username"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="John"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  for="Username"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Name</label>
+                <input
+                  type="text"
+                  id="Username"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="John"
+                  required
+                />
+              </div>
               <div>
                 <label
                   for="email"
@@ -39,18 +64,29 @@ async function loginUser(){
                   required
                 />
               </div>
-              <div>
+              <div class="mb-6">
                 <label
                   for="password"
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Your password</label>
+                >Password</label>
                 <input
-                  v-model="user.password"
                   type="password"
-                  name="password"
                   id="password"
-                  placeholder="••••••••"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="•••••••••"
+                  required
+                />
+              </div>
+              <div class="mb-6">
+                <label
+                  for="confirm_password"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Confirm password</label>
+                <input
+                  type="password"
+                  id="confirm_password"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="•••••••••"
                   required
                 />
               </div>
@@ -69,19 +105,19 @@ async function loginUser(){
                     class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                   >Remember me</label>
                 </div>
-                <a
+                <div class="text-sm ml-auto font-medium text-gray-500 dark:text-gray-300">
+                 Have Account?
+                <button
                   href="#"
-                  class="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500"
-                >Lost Password?</a>
+                  class="text-blue-700 hover:underline dark:text-blue-500"
+                > Login</button>
+              </div>
               </div>
               <button
                 type="submit"
                 class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >Login to your account</button>
-              <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                Not registered?
-                <button href="#" class="text-blue-700 hover:underline dark:text-blue-500">Create account</button>
-              </div>
+              >Create account</button>
+           
             </form>
           </div>
         </div>
@@ -93,7 +129,6 @@ async function loginUser(){
             consequatur.
           </p>
         </div>
-
       </div>
     </div>
   </section>
