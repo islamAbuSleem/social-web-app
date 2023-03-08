@@ -1,13 +1,31 @@
 <script setup>
 import { ref } from 'vue';
 import { login } from '../../../Api/auth';
+import { useVuelidate } from '@vuelidate/core'
+import { required, email, minLength } from '@vuelidate/validators'
+
 
 const user = ref({
   email:'',
   password:''
 });
 
+const rules = {
+    email:{
+      required,
+      email
+    },
+    password:{
+      required,
+      minLength: minLength(6)
+    }
+}
+const $v = useVuelidate(rules, user.value)
 async function loginUser(){
+  
+  await $v.value.$validate()
+  if($v.value.$invalid) return;
+
   let res = await login(user.value)
 }
 
@@ -42,9 +60,13 @@ async function loginUser(){
                   name="email"
                   id="email"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  :class="{'border-red-500':$v.email.$error}"
                   placeholder="name@company.com"
-                  required
                 />
+                <template v-if="$v.email.$error">
+                <span v-if="$v.email.required.$invalid " class="text-red-500"> E-mail is required</span>
+                <span v-if="$v.email.email.$invalid " class="text-red-500"> Enter a valid email</span>
+              </template>
               </div>
               <div>
                 <label
@@ -58,7 +80,7 @@ async function loginUser(){
                   id="password"
                   placeholder="••••••••"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  required
+                  
                 />
               </div>
               <div class="flex items-start">
