@@ -10,6 +10,7 @@ const registerSchema = Joi.object({
     city: Joi.string().max(45),
     website: Joi.string().max(45),
 
+    
 })
 
 const loginSchema = Joi.object({

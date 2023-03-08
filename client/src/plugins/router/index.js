@@ -14,7 +14,16 @@ const routes = [
             layout:'auth',
             requiredAuth: false
         }
-    }
+    },
+    {
+        path:'/auth/register',
+        name:'register',
+        component: () => import('../../views/auth/register/index.vue'),
+        meta:{
+            layout:'auth',
+            requiredAuth: false
+        }
+    },
 ]
 
 const router = createRouter({

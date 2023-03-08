@@ -9,15 +9,14 @@ const user = ref({
 
 async function loginUser(){
   let res = await login(user.value)
-  console.log(res)
 }
 
 </script>
 
 <template>
   <section class="login bg-violet-300">
-    <div class="container mx-auto h-screen flex items-center">
-      <div class="grid grid-cols-2 auto-cols-max w-3/5 mx-auto h-3/5 rounded -mt-16">
+    <div class="container mx-auto min-h-screen flex items-center">
+      <div class="grid grid-cols-2 auto-cols-max w-3/5 mx-auto h-3/5 rounded ">
         <div class="left rounded-l">
           <h1>Hello World.</h1>
           <p>
@@ -28,7 +27,7 @@ async function loginUser(){
         </div>
         <div class="bg-white rounded-r flex items-center py-10">
           <div
-            class="w-full mx-auto max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-lg sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700"
+            class="w-full mx-auto max-w-sm p-4 bg-white rounded-lg  sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700"
           >
             <form class="space-y-6" @submit.prevent="loginUser">
               <h5 class="text-xl font-medium text-gray-900 dark:text-white">Sign in to our platform</h5>
@@ -88,7 +87,7 @@ async function loginUser(){
               >Login to your account</button>
               <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
                 Not registered?
-                <button href="#" class="text-blue-700 hover:underline dark:text-blue-500">Create account</button>
+                <button href="#" class="text-blue-700 hover:underline dark:text-blue-500" @click="$router.push({name: 'register'})">Create account</button>
               </div>
             </form>
           </div>
