@@ -21,7 +21,13 @@ module.exports.register = async (req, res, next) => {
 
     user.password = hash;
     await user.save();
-    res.status(200).send('user created successfully');
+
+    user.token = user.generateToken()
+    const userProperries = _.pick(user, ['username', 'email', 'name', 'coverPic', 'profilePic', 'city', 'website'])
+    console.log( user.token)
+    res.cookie("accessToken", user.token, {
+        httpOnly: true
+    }).status(200).send({message:'user created successfully', user:userProperries})
 }
 
 module.exports.login = async (req, res, next) => {

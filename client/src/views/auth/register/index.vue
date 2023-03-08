@@ -1,27 +1,31 @@
 <script setup>
 import { ref } from "vue";
-import { login } from "../../../Api/auth";
+import { register } from "../../../Api/auth";
 
 const user = ref({
   email: "",
-  password: ""
+  password: "",
+  confirmPassword:"",
+  name:"",
+  username:"",
 });
 
-async function loginUser() {
-  let res = await login(user.value);
-  console.log(res);
+async function createUser() {
+  delete user.value.confirmPassword
+  let res = await register(user.value);
+  console.log('res',res);
 }
 </script>
 
 <template>
   <section class="login bg-violet-300">
-    <div class="container mx-auto h-screen flex ">
-      <div class="grid grid-cols-2 auto-cols-max w-3/5 mx-auto h-3/5 rounded mt-3">
+    <div class="container mx-auto min-h-screen flex ">
+      <div class="grid grid-cols-2 auto-cols-max w-3/5 mx-auto h-3/5 rounded place-self-center">
         <div class="bg-white rounded-l flex items-center ">
           <div
             class="w-full mx-auto max-w-sm p-4 bg-white rounded-lg  sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700"
           >
-            <form class="space-y-6" @submit.prevent="loginUser">
+            <form class="space-y-6" @submit.prevent="createUser">
               <h5 class="text-xl font-medium text-gray-900 dark:text-white">Register to our platform</h5>
               <div>
                 <label
@@ -29,6 +33,7 @@ async function loginUser() {
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >Username</label>
                 <input
+                v-model="user.username"
                   type="text"
                   id="Username"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -38,12 +43,13 @@ async function loginUser() {
               </div>
               <div>
                 <label
-                  for="Username"
+                  for="Name"
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >Name</label>
                 <input
+                v-model="user.name"
                   type="text"
-                  id="Username"
+                  id="Name"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="John"
                   required
@@ -70,6 +76,7 @@ async function loginUser() {
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >Password</label>
                 <input
+                v-model="user.password"
                   type="password"
                   id="password"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -83,6 +90,7 @@ async function loginUser() {
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >Confirm password</label>
                 <input
+                v-model="user.confirmPassword"
                   type="password"
                   id="confirm_password"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -94,21 +102,21 @@ async function loginUser() {
                 <div class="flex items-start">
                   <div class="flex items-center h-5">
                     <input
-                      id="remember"
+                      id="Accept_terms"
                       type="checkbox"
                       value
                       class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
                     />
                   </div>
                   <label
-                    for="remember"
+                    for="Accept_terms"
                     class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >Remember me</label>
+                  >Accept Terms</label>
                 </div>
                 <div class="text-sm ml-auto font-medium text-gray-500 dark:text-gray-300">
                  Have Account?
                 <button
-                  href="#"
+                 @click="$router.push({name:'login'})"
                   class="text-blue-700 hover:underline dark:text-blue-500"
                 > Login</button>
               </div>
