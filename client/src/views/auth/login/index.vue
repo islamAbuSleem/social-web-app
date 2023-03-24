@@ -1,40 +1,40 @@
 <script setup>
-import { ref } from 'vue';
-import { login } from '../../../Api/auth';
-import { useVuelidate } from '@vuelidate/core'
-import { required, email, minLength } from '@vuelidate/validators'
-
+import { ref, computed } from "vue";
+import { login } from "../../../Api/auth";
+import { useVuelidate } from "@vuelidate/core";
+import { required, email, minLength } from "@vuelidate/validators";
 
 const user = ref({
-  email:'',
-  password:''
+  email: "",
+  password: ""
 });
 
-const rules = {
-    email:{
+const rules = computed(() => {
+  return {
+    email: {
       required,
       email
     },
-    password:{
+    password: {
       required,
       minLength: minLength(6)
     }
-}
-const $v = useVuelidate(rules, user.value)
-async function loginUser(){
-  
-  await $v.value.$validate()
-  if($v.value.$invalid) return;
+  };
+});
+const $v = useVuelidate(rules, user.value);
 
-  let res = await login(user.value)
-}
+async function loginUser() {
+  await $v.value.$validate();
+  if ($v.value.$invalid) return;
 
+  let res = await login(user.value);
+}
 </script>
 
 <template>
   <section class="login bg-violet-300">
     <div class="container mx-auto min-h-screen flex items-center">
-      <div class="grid grid-cols-2 auto-cols-max w-3/5 mx-auto h-3/5 rounded ">
+      <div class="grid grid-cols-2 auto-cols-max w-3/5 mx-auto h-3/5 rounded">
         <div class="left rounded-l">
           <h1>Hello World.</h1>
           <p>
@@ -45,7 +45,7 @@ async function loginUser(){
         </div>
         <div class="bg-white rounded-r flex items-center py-10">
           <div
-            class="w-full mx-auto max-w-sm p-4 bg-white rounded-lg  sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700"
+            class="w-full mx-auto max-w-sm p-4 bg-white rounded-lg sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700"
           >
             <form class="space-y-6" @submit.prevent="loginUser">
               <h5 class="text-xl font-medium text-gray-900 dark:text-white">Sign in to our platform</h5>
@@ -56,6 +56,7 @@ async function loginUser(){
                 >Your email</label>
                 <input
                   v-model="user.email"
+                  @blur="$v.email.$touch()"
                   type="email"
                   name="email"
                   id="email"
@@ -64,9 +65,9 @@ async function loginUser(){
                   placeholder="name@company.com"
                 />
                 <template v-if="$v.email.$error">
-                <span v-if="$v.email.required.$invalid " class="text-red-500"> E-mail is required</span>
-                <span v-if="$v.email.email.$invalid " class="text-red-500"> Enter a valid email</span>
-              </template>
+                  <span v-if="$v.email.required.$invalid " class="text-red-500">E-mail is required</span>
+                  <span v-if="$v.email.email.$invalid " class="text-red-500">Enter a valid email</span>
+                </template>
               </div>
               <div>
                 <label
@@ -75,13 +76,24 @@ async function loginUser(){
                 >Your password</label>
                 <input
                   v-model="user.password"
+                  @blur="$v.password.$touch()"
                   type="password"
                   name="password"
                   id="password"
+                  :class="{'border-red-500':$v.password.$error}"
                   placeholder="••••••••"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  
                 />
+                <template v-if="$v.password.$error">
+                  <span
+                    v-if="$v.password.required.$invalid "
+                    class="text-red-500"
+                  >Password is required</span>
+                  <span
+                    v-if="$v.password.minLength.$invalid "
+                    class="text-red-500"
+                  >Password must be at least 6 char</span>
+                </template>
               </div>
               <div class="flex items-start">
                 <div class="flex items-start">
@@ -109,7 +121,11 @@ async function loginUser(){
               >Login to your account</button>
               <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
                 Not registered?
-                <button href="#" class="text-blue-700 hover:underline dark:text-blue-500" @click="$router.push({name: 'register'})">Create account</button>
+                <button
+                  href="#"
+                  class="text-blue-700 hover:underline dark:text-blue-500"
+                  @click="$router.push({name: 'register'})"
+                >Create account</button>
               </div>
             </form>
           </div>
