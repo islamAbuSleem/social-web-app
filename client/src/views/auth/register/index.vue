@@ -2,7 +2,7 @@
 import { ref, computed } from "vue";
 import { register } from "../../../Api/auth";
 import { useVuelidate } from "@vuelidate/core";
-import { required, email, minLength,sameAs } from "@vuelidate/validators";
+import { required, email, minLength, sameAs } from "@vuelidate/validators";
 
 const user = ref({
   email: "",
@@ -27,11 +27,11 @@ const rules = computed(() => {
       sameAs: sameAs(user.value.password)
     },
     name: {
-      required,
+      required
     },
     username: {
-      required,
-    },
+      required
+    }
   };
 });
 
@@ -70,10 +70,12 @@ async function createUser() {
                   :class="{'border-red-500':$v.username.$error}"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="John"
-                  
                 />
                 <template v-if="$v.username.$error">
-                  <span v-if="$v.username.required.$invalid " class="text-red-500">username is required</span>
+                  <span
+                    v-if="$v.username.required.$invalid "
+                    class="text-red-500"
+                  >username is required</span>
                 </template>
               </div>
               <div>
@@ -89,7 +91,6 @@ async function createUser() {
                   :class="{'border-red-500':$v.name.$error}"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="John"
-                  
                 />
                 <template v-if="$v.name.$error">
                   <span v-if="$v.name.required.$invalid " class="text-red-500">name is required</span>
@@ -109,7 +110,6 @@ async function createUser() {
                   :class="{'border-red-500':$v.email.$error}"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                   placeholder="name@company.com"
-                  
                 />
                 <template v-if="$v.email.$error">
                   <span v-if="$v.email.required.$invalid " class="text-red-500">E-mail is required</span>
@@ -129,10 +129,12 @@ async function createUser() {
                   :class="{'border-red-500':$v.password.$error}"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="•••••••••"
-                  
                 />
                 <template v-if="$v.password.$error">
-                  <span v-if="$v.password.required.$invalid " class="text-red-500">password is required</span>
+                  <span
+                    v-if="$v.password.required.$invalid "
+                    class="text-red-500"
+                  >password is required</span>
                   <span
                     v-if="$v.password.minLength.$invalid "
                     class="text-red-500"
@@ -152,11 +154,16 @@ async function createUser() {
                   :class="{'border-red-500':$v.confirmPassword.$error}"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="•••••••••"
-                  
                 />
                 <template v-if="$v.confirmPassword.$error">
-                  <span v-if="$v.confirmPassword.required.$invalid " class="text-red-500">confirm password is required</span>
-                  <span v-if="$v.confirmPassword.sameAs.$invalid " class="text-red-500">confirm password must be same as password</span>
+                  <span
+                    v-if="$v.confirmPassword.required.$invalid "
+                    class="text-red-500"
+                  >confirm password is required</span>
+                  <span
+                    v-if="$v.confirmPassword.sameAs.$invalid "
+                    class="text-red-500"
+                  >confirm password must be same as password</span>
                   <span
                     v-if="$v.confirmPassword.minLength.$invalid "
                     class="text-red-500"
