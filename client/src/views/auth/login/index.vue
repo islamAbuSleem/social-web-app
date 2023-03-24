@@ -56,6 +56,7 @@ async function loginUser(){
                 >Your email</label>
                 <input
                   v-model="user.email"
+                  @blur="$v.email.$touch()"
                   type="email"
                   name="email"
                   id="email"
@@ -75,13 +76,19 @@ async function loginUser(){
                 >Your password</label>
                 <input
                   v-model="user.password"
+                  @blur="$v.password.$touch()"
                   type="password"
                   name="password"
                   id="password"
+                  :class="{'border-red-500':$v.password.$error}"
                   placeholder="••••••••"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                   
                 />
+                <template v-if="$v.password.$error">
+                <span v-if="$v.password.required.$invalid " class="text-red-500"> Password is required</span>
+                <span v-if="$v.password.minLength.$invalid " class="text-red-500"> Password must be at least 6 char</span>
+              </template>
               </div>
               <div class="flex items-start">
                 <div class="flex items-start">
