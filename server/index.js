@@ -17,8 +17,9 @@ app.use((req, res, next)=>{
     next()
 })
 app.use(cors({
-    origin:'http://localhost:5173'
+    origin:'http://127.0.0.1:5173'
 }));
+
 app.use(morgan('tiny'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
