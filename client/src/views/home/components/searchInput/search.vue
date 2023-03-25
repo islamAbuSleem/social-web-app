@@ -6,7 +6,7 @@ function search(){
 </script>
 
 <template>
-    <section class="w-25">
+    <section>
         
         <form class="flex items-center ml-6">   
             <label for="simple-search" class="sr-only">Search</label>
