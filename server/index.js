@@ -5,19 +5,21 @@ const cors = require('cors');
 const sequelize = require('./DB/dbConfig');
 const cookieParser = require('cookie-parser');
 require('dotenv').config()
+const { verifyUser } = require('./middlewares/auth')
 
 // import routes
 const usersRoute = require('./routes/users');
 const authRoute = require('./routes/auth');
+const postsRoute = require('./routes/posts');
 
 
 // middlewares
-app.use((req, res, next)=>{
+app.use((req, res, next) => {
     res.header('Access-Control-Allow-Credentials', true);
     next()
 })
 app.use(cors({
-    origin:'http://127.0.0.1:5173'
+    origin: 'http://127.0.0.1:5173'
 }));
 
 app.use(morgan('tiny'));
@@ -29,6 +31,7 @@ app.use(cookieParser())
 // routes
 app.use('/users', usersRoute);
 app.use('/auth', authRoute);
+app.use('/posts', verifyUser, postsRoute);
 
 
 // testing db connection

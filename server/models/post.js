@@ -3,35 +3,35 @@ const sequelize = require('../DB/dbConfig')
 
 const User = require('./user');
 
-class Post extends Model{}
+class Post extends Model { }
 
 Post.init({
-    id:{
+    id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         unique: true,
         primaryKey: true,
         autoIncrement: true
     },
-    desc:{
+    description: {
         type: DataTypes.STRING,
     },
-    image:{
+    image: {
         type: DataTypes.STRING,
     },
-    userId:{
+    userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references:{
+        references: {
             model: User,
             key: 'id'
         }
     }
-},{
+}, {
     sequelize,
-    modelName:'Post'
+    modelName: 'Post'
 })
 
-Post.hasOne(User,{onDelete: 'cascade', hooks: true})
+Post.hasOne(User, { onDelete: 'cascade', hooks: true })
 
 module.exports = Post
