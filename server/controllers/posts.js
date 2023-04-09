@@ -1,7 +1,9 @@
 const Post = require('../models/post');
 const _ = require('lodash');
-module.exports.createPost = (req, res, next) => {
 
 
-    res.send({ data: { file: req.file, data: req.body }, message: 'success' })
+module.exports.createPost = async (req, res, next) => {
+
+    const post = await Post.create({ description: req.body.description, userId: res.locals.userId, image: req.file.filename });
+    return res.status(201).send(post)
 }

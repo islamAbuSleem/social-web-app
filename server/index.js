@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const morgan = require('morgan');
 const cors = require('cors');
 const sequelize = require('./DB/dbConfig');
@@ -26,6 +27,7 @@ app.use(morgan('tiny'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser())
+app.use(express.static(path.join(__dirname, './public/uploads')));
 
 
 // routes
