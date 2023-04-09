@@ -7,6 +7,7 @@ module.exports.verifyUser = (req, res, next) => {
     try {
         var decoded = jwt.verify(token, process.env.jwtPrivteKey);
         if (decoded) {
+            res.locals.userId = decoded.id
             return next()
         }
     } catch (err) {
