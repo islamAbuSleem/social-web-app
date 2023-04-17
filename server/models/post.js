@@ -32,6 +32,7 @@ Post.init({
     modelName: 'Post'
 })
 
-Post.hasOne(User, { onDelete: 'cascade', hooks: true })
+User.hasMany(Post, { onDelete: 'cascade', hooks: true })
+Post.belongsTo(User)
 
 module.exports = Post

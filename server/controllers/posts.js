@@ -1,4 +1,5 @@
 const Post = require('../models/post');
+const User = require('../models/user');
 const _ = require('lodash');
 
 
@@ -9,7 +10,12 @@ module.exports.createPost = async (req, res, next) => {
 
 
 module.exports.getPosts = async (req, res, next) => {
-    const posts = await Post.findAll()
+    const posts = await Post.findAll({
+        include: [{
+            model: User,
+            attributes: ['username']
+        }]
+    })
     posts.forEach(el => {
         el.image = req.protocol + '://' + req.get('host') + '/' + el.image
     })
